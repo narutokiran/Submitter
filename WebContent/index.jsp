@@ -30,25 +30,6 @@
 		
 		$("#dialog-form-jobName").dialog("open");
 	});
-	$("#jobType").on("change",function(){
-		var JOBTYPE=$("#jobType :selected").val();
-		var content="";
-		var currentDiv=this.id;
-		currentDiv.empty();
-		if(JOBTYPE=="JavaClass")
-		{
-			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select id="jobType"><option value="JavaClass" selected="selected">Java Class</option><option value="MahoutClusterInputConversion">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Java Class Name:</b><input type="Text" value="" name="'+currentDiv+'className"/><br/><b>Arguments:</b><input type="Text" value="" name="'+currentDiv+'arguments"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
-		}
-		else if(JOBTYPE=="MahoutClusterInputConversion")
-		{
-			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select id="jobType"><option value="JavaClass" >Java Class</option><option value="MahoutClusterInputConversion" selected="selected">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Input:</b><input type="Text" value="" name="'+currentDiv+'input"/><br/><b>Output:</b><input type="Text" value="" name="'+currentDiv+'output"/><br/><b>Vector Class:</b><input type="Text" value="" name="'+currentDiv+'vectorClass"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
-		}
-		else if(JOBTYPE=="MahoutKMeansCluster")
-		{
-			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select id="jobType"><option value="JavaClass" >Java Class</option><option value="MahoutClusterInputConversion" >Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster" selected="selected">Mahout KMeans Cluster</option></select><br/><b>Input:</b><input type="Text" value="" name="'+currentDiv+'input"/><br/><b>Output:</b><input type="Text" value="" name="'+currentDiv+'output"/><br/><b>Distance Measure:</b><input type="Text" value="" name="'+currentDiv+'distanceMeasure"/><br/><b>K Points:</b><input type="Text" value="" name="'+currentDiv+'kPoints"/><br/><b>Iterations:</b><input type="Text" value="" name="'+currentDiv+'iterations"/><br/><b>Cluster Path:</b><input type="Text" value="" name="'+currentDiv+'clusterPath"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
-		}
-		$(content).appendTo("#"+currentDiv);
-	});
 	$(function(){
 	    $("#dialog-form-jobName").dialog({
 	        autoOpen: false,
@@ -62,7 +43,7 @@
 	        		if(jobName != ""){
 	        		    	jobNames[jobNames.length]=jobName;
 	        		    	$("#jobNames").val(jobNames);
-	        		    	var content='<div id="'+jobName+'"> <br/> <b>Job Name:</b>'+jobName+'<br/><b>Job Type:</b><select id="jobType"><option value="JavaClass" selected="selected">Java Class</option><option value="MahoutClusterInputConversion">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Java Class Name:</b><input type="Text" value="" name="'+jobName+'className"/><br/><b>Arguments:</b><input type="Text" value="" name="'+jobName+'arguments"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+jobName+'predecessors"/></div>';
+	        		    	var content='<div id="'+jobName+'"> <br/> <b>Job Name:</b>'+jobName+'<br/><b>Job Type:</b><select class="jobType" id="'+jobName+'jobType"><option value="JavaClass" selected="selected">Java Class</option><option value="MahoutClusterInputConversion">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Java Class Name:</b><input type="Text" value="" name="'+jobName+'className"/><br/><b>Arguments:</b><input type="Text" value="" name="'+jobName+'arguments"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+jobName+'predecessors"/></div>';
 	        				$(content).appendTo("#WorkflowArea");
 	        		    }
 	        		    else
@@ -76,6 +57,25 @@
 	            }
 	        }
 	    });
+	});
+$(document).on("change",".jobType",function(){
+		var JOBTYPE=$("#"+this.id+" :selected").val();
+		var content="";
+		var currentDiv=$("#"+this.id).closest("div").attr("id");
+		$("#"+currentDiv).empty();
+		if(JOBTYPE=="JavaClass")
+		{
+			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select class="jobType" id="'+currentDiv+'jobType"><option value="JavaClass" selected="selected">Java Class</option><option value="MahoutClusterInputConversion">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Java Class Name:</b><input type="Text" value="" name="'+currentDiv+'className"/><br/><b>Arguments:</b><input type="Text" value="" name="'+currentDiv+'arguments"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
+		}
+		else if(JOBTYPE=="MahoutClusterInputConversion")
+		{
+			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select class="jobType" id="'+currentDiv+'jobType"><option value="JavaClass" >Java Class</option><option value="MahoutClusterInputConversion" selected="selected">Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster">Mahout KMeans Cluster</option></select><br/><b>Input:</b><input type="Text" value="" name="'+currentDiv+'input"/><br/><b>Output:</b><input type="Text" value="" name="'+currentDiv+'output"/><br/><b>Vector Class:</b><input type="Text" value="" name="'+currentDiv+'vectorClass"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
+		}
+		else if(JOBTYPE=="MahoutKMeansCluster")
+		{
+			content='<div id="'+currentDiv+'"> <br/> <b>Job Name:</b>'+currentDiv+'<br/><b>Job Type:</b><select class="jobType" id="'+currentDiv+'jobType"><option value="JavaClass" >Java Class</option><option value="MahoutClusterInputConversion" >Mahout Cluster Input Conversion</option><option value="MahoutKMeansCluster" selected="selected">Mahout KMeans Cluster</option></select><br/><b>Input:</b><input type="Text" value="" name="'+currentDiv+'input"/><br/><b>Output:</b><input type="Text" value="" name="'+currentDiv+'output"/><br/><b>Distance Measure:</b><input type="Text" value="" name="'+currentDiv+'distanceMeasure"/><br/><b>K Points:</b><input type="Text" value="" name="'+currentDiv+'kPoints"/><br/><b>Iterations:</b><input type="Text" value="" name="'+currentDiv+'iterations"/><br/><b>Cluster Path:</b><input type="Text" value="" name="'+currentDiv+'clusterPath"/><br/><b>Predecessors:</b><input type="Text" value="" name="'+currentDiv+'predecessors"/></div>';
+		}
+		$(content).appendTo("#"+currentDiv);
 	});
 </script>
 </html>
