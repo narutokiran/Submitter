@@ -169,8 +169,50 @@
 			modelPath.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_modelPath")));
 			job[i].appendChild(modelPath);
 		}
+		else if(jobType.equals("HadoopMR"))
+		{
+			//adding input path
+			Element inputPaths=doc.createElement("inputPaths");
+			job[i].appendChild(inputPaths);
+			String inputs[]=request.getParameter(listOfJobs[i]+"_inputPaths").split(",");
+			for(int j=0;j<inputs.length;j++)
+			{
+				Element input=doc.createElement("input");
+				inputPaths.appendChild(input);
+				Element path=doc.createElement("path");
+				path.appendChild(doc.createTextNode(inputs[j]));
+				input.appendChild(path);
+			}
+			//adding output path
+			Element outputPath=doc.createElement("outputPath");
+			outputPath.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_outputPath")));
+			job[i].appendChild(outputPath);
+			//adding job class value 
+			Element jobClass=doc.createElement("jobClass");
+			jobClass.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_jobClass")));
+			job[i].appendChild(jobClass);
+			//adding Mapper Class value
+			Element mapperClass=doc.createElement("mapperClass");
+			mapperClass.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_mapperClass")));
+			job[i].appendChild(mapperClass);
+			//adding Combiner Class value
+			Element combinerClass=doc.createElement("combinerClass");
+			combinerClass.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_combinerClass")));
+			job[i].appendChild(combinerClass);
+			//adding Reducer Class value
+			Element reducerClass=doc.createElement("reducerClass");
+			reducerClass.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_reducerClass")));
+			job[i].appendChild(reducerClass);
+			//adding Output Key Class value
+			Element outputKeyClass=doc.createElement("outputKeyClass");
+			outputKeyClass.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_outputKeyClass")));
+			job[i].appendChild(outputKeyClass);
+			//adding output value Class value
+			Element outputValue=doc.createElement("outputValue");
+			outputValue.appendChild(doc.createTextNode(request.getParameter(listOfJobs[i]+"_mapperClass")));
+			job[i].appendChild(outputValue);
+		}
  	}
-		
 		// write the content into xml file
 		TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		Transformer transformer = transformerFactory.newTransformer();
